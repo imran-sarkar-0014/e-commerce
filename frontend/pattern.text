@@ -1,0 +1,14 @@
+pages: 
+    home
+    search 
+    product view 
+    checkout or cart
+    orders 
+    view order details
+    profile
+
+    login 
+    register 
+
+components:
+    
