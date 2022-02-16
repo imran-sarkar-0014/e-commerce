@@ -10,7 +10,7 @@ const Header = ({ toggler }) => {
     }
 
     return (
-        <header class="bg-gray-800 text-gray-100 flex flex-col md:flex-row shadow-md">
+        <header class="bg-pink-500 text-gray-100 flex flex-col md:flex-row shadow-md">
 
             <div className='flex justify-between items-center flex-1'>
                 <Link to="/" class="block p-4 text-white font-bold">
@@ -48,7 +48,7 @@ const Header = ({ toggler }) => {
                     </Link >
                 </div>
 
-                <button onClick={toggler} class="mobile-menu-button p-4 focus:outline-none focus:bg-gray-700 md:hidden">
+                <button onClick={toggler} class="bg-inherit mobile-menu-button p-4 focus:outline-none focus:bg-pink-600 md:hidden">
                     <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
