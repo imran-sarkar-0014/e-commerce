@@ -14,6 +14,9 @@ const Order = React.lazy(() => import('./pages/Order'));
 const Carts = React.lazy(() => import('./pages/Carts'));
 const Wishes = React.lazy(() => import('./pages/Wishes'));
 
+const Login = React.lazy(() => import('./pages/auth/Login'))
+const Registration = React.lazy(() => import('./pages/auth/Registration'))
+
 
 
 
@@ -55,6 +58,8 @@ function App() {
                         <Route path="/wishes" element={<Wishes />} />
                         <Route path="/carts" element={<Carts />} />
                         <Route path="/orders" element={<Order />} />
+                        <Route path="/auth/login" element={<Login />} />
+                        <Route path="/auth/registration" element={< Registration />} />
                         <Route path="/orders/:id" element={<Order />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/" element={<Home />} />

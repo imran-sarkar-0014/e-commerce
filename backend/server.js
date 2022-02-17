@@ -24,6 +24,11 @@ app.use(express.urlencoded({
     extended: true
 }))
 
+
+/// seeing all incomming request
+const m = require('morgan')
+app.use(m('tiny'))
+
 // connecting to the database
 const mongoose = require('mongoose')
 
@@ -49,6 +54,7 @@ app.get('/', (req, res) => {
 
 // error handling
 const errorHandler = require('./middleware/errorHandler')
+const morgan = require('morgan')
 app.use(errorHandler)
 
 

@@ -23,7 +23,7 @@ Content-Type: application/json
 "Premium Display - Catch every detail with a stunning display that features 50% more pixels than the original Quest",
 "Ultimate Control - Redesigned Oculus Touch controllers transport your movements directly into VR with intuitive controls",
 "PC VR Compatible - Step into incredible Oculus Rift titles by connecting an Oculus Link cable to a compatible gaming PC. Oculus Link Cable sold separately",
-"3D Cinematic Sound - Hear in all directions with built-in speakers that deliver cinematic 3D positional audio",
+"3D Cinematic Sound - Hear in all directions with built-in speakers that deliver cinematic 3D positional audio"
     ],
     "spacifications": {
         "Platform" : "Oculus Quest 2"
@@ -31,10 +31,28 @@ Content-Type: application/json
         
 }
 
+
 ### get products
 GET  http://localhost:8000/api/products
 
+### get a single product
+GET  http://localhost:8000/api/products/620e38e5585b104227dad40a
 
+### get products by catagory
+GET  http://localhost:8000/api/products?catagory=vr
 
+### update a product
+PUT  http://localhost:8000/api/products/620e38e5585b104227dad40a
+Content-Type: application/json
 
+{
+    "priceInCent" : 2990,
+    "rating": 4.3
+}
+
+### delete a product by it's id
+620e52c334b8708c88ec9095
+###
+
+GET  http://localhost:8000/api/products/620e52c334b8708c88ec9095
 

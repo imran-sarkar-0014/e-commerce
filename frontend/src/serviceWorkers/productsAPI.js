@@ -12,3 +12,11 @@ export const getProducts = async (callback, fallback) => {
     }
 }
 
+export const getOneProductDetails = async (id, callback, fallback) => {
+    try {
+        const product = await axios.get('/api/products/' + id)
+        callback(product.data)
+    } catch (err) {
+        fallback(err)
+    }
+}
