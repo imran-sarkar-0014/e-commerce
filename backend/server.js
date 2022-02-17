@@ -16,6 +16,14 @@ app.use(cors({
     origin: '*'
 }))
 
+
+// accept body
+
+app.use(express.json())
+app.use(express.urlencoded({
+    extended: true
+}))
+
 // connecting to the database
 const mongoose = require('mongoose')
 
@@ -30,7 +38,7 @@ mongoose.connect(process.env.DB_URL, {}).then(() => {
 
 
 // importing routers
-const productsRouter = require('./routers/products')
+const productsRouter = require('./routers/productRouter')
 app.use('/api/products', productsRouter)
 
 

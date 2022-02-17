@@ -1,16 +1,15 @@
 import { Link } from "react-router-dom"
 
-const Product = () => {
+const Product = ({ product }) => {
 
     return (
-        <Link to='/products/5490509' class="lg:w-1/4 md:w-1/2 px-4 pb-8 w-full flex flex-col items-center">
-            <span class="block relative w-[70%] md:w-full rounded-md overflow-hidden">
-                <img alt="ecommerce" class="object-cover p-3 object-center w-full h-full block" src="https://images-na.ssl-images-amazon.com/images/I/61DYLoyNRWL.__AC_SY300_SX300_QL70_FMwebp_.jpg" />
-            </span>
-            <div class="mt-4">
-                <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">CATEGORY</h3>
-                <h2 class="text-gray-900 title-font text-lg font-medium">The 400 Blows</h2>
-                <p class="mt-1">$18.40</p>
+        <Link to={`/products/${product._id}`} class="flex flex-col items-center m-4">
+            <div className="w-[40%] md:w-full md:aspect-w-9 md:aspect-h-12">
+                <img className="h-full w-full" src={product.imageURL} alt="product" />
+            </div>
+            <div>
+                <h3 className="text-xl font-semibold">{product.productName}</h3>
+                <h4 className="text-lg">${product.priceInCent / 100}</h4>
             </div>
         </Link>
     )
