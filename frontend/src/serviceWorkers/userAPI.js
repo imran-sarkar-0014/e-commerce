@@ -8,3 +8,12 @@ export const login = async (credentials, callback, fallback) => {
         fallback(err)
     }
 }
+
+export const getUser = async (callback, fallback) => {
+    try {
+        const user = await axios.get('/api/users')
+        callback(user.data)
+    } catch (err) {
+        fallback(err)
+    }
+}

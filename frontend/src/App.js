@@ -6,7 +6,18 @@ import AppLayout from './layout/AppLayout';
 import Header from './components/Header'
 import Sidebar from './components/SideBar'
 import Footer from './components/Footer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+
+// api functionality
+
+import { setHeader } from './serviceWorkers/axios'
+import { getUser } from './serviceWorkers/userAPI'
+
+/// store functionality
+
+import { resetUser, setUser } from './store/actions/user'
+
 
 const Home = React.lazy(() => import('./pages/Home'))
 const Profile = React.lazy(() => import('./pages/Profile'));
@@ -17,7 +28,6 @@ const Wishes = React.lazy(() => import('./pages/Wishes'));
 
 const Login = React.lazy(() => import('./pages/auth/Login'))
 const Registration = React.lazy(() => import('./pages/auth/Registration'))
-
 
 
 
@@ -61,13 +71,24 @@ const PrivateUrl = ({ component: Component }) => {
 
 function App() {
 
-
+    const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
     const userToken = useSelector(state => state.userToken)
 
     useEffect(() => {
 
+
+        dispatch(resetUser())
+        setHeader(userToken)
+
         if (userToken === '')
             return
+
+        getUser((_user) => {
+            dispatch(setUser(_user))
+        }, (err) => {
+            console.log(err)
+        })
 
     }, [userToken])
 
@@ -90,8 +111,18 @@ function App() {
                         <Route path="/carts" element={<PrivateUrl component={Carts} />} />
                         <Route path="/orders" element={<PrivateUrl component={Order} />} />
 
-                        <Route path="/auth/login" element={<Login />} />
-                        <Route path="/auth/registration" element={< Registration />} />
+
+                        <Route path="/auth/login" element={
+                            !user?.logged ?
+                                <Login /> :
+                                <Navigate to='/' />
+                        } />
+                        <Route path="/auth/registration" element={
+                            !user?.logged ?
+                                <Registration /> :
+                                <Navigate to='/' />
+                        } />
+
                         <Route path="/orders/:id" element={<PrivateUrl component={Order} />} />
                         <Route path="/profile" element={<PrivateUrl component={Profile} />} />
                         <Route path="/" element={<Home />} />

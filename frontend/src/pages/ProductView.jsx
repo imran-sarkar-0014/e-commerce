@@ -22,7 +22,7 @@ const ProductView = () => {
         <section className="text-gray-600 body-font overflow-hidden">
             <div className="container px-5 py-24 mx-auto">
                 <div className="lg:w-4/5 mx-auto flex flex-wrap">
-                    <img alt="product" className="lg:w-1/2 w-[70%] md:w-full lg:h-auto aspect-h-9 object-cover object-center rounded" src={product?.imageURL} />
+                    <img alt="product" className="lg:w-1/2 w-[70%] md:w-full lg:h-auto aspect-h-9 object-fill object-center rounded" src={product?.imageURL} />
                     <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                         {/* <h2 className="text-sm title-font text-gray-500 tracking-widest">BRAND NAME</h2> */}
                         <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product?.productName}</h1>
@@ -87,33 +87,36 @@ const ProductView = () => {
                         </div>
                     </div>
 
-
                     <div>
-                        <h2 className='text-xl font-semibold mt-8'>Spcacifications</h2>
-                        <table>
-                            {
-                                Object.keys(product?.spacifications ?? [])?.map(spc => (
-                                    <tr key={spc}>
-                                        <td className='pr-2 font-semibold'>{spc}</td>
-                                        <td className='pl-2'>{product?.spacifications[spc]}</td>
-                                    </tr>
-                                ))
-                            }
-                        </table>
+
+
+
+                        <div>
+                            <h2 className='text-xl font-semibold mt-8'>Spcacifications</h2>
+                            <table>
+                                {
+                                    Object.keys(product?.spacifications ?? [])?.map(spc => (
+                                        <tr key={spc}>
+                                            <td className='pr-2 font-semibold'>{spc}</td>
+                                            <td className='pl-2'>{product?.spacifications[spc]}</td>
+                                        </tr>
+                                    ))
+                                }
+                            </table>
+                        </div>
+
+                        <div>
+                            <h2 className='text-xl font-semibold mt-8'>About</h2>
+
+                            <ul className='list-disc'>
+                                {
+                                    product?.about?.map((about, index) => (
+                                        <li className='ml-6' key={index}>{about}</li>
+                                    ))
+                                }
+                            </ul>
+                        </div>
                     </div>
-
-                    <div>
-                        <h2 className='text-xl font-semibold mt-8'>About</h2>
-
-                        <ul className='list-disc'>
-                            {
-                                product?.about?.map((about, index) => (
-                                    <li key={index}>{about}</li>
-                                ))
-                            }
-                        </ul>
-                    </div>
-
 
                 </div>
             </div>
