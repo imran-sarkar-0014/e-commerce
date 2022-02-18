@@ -44,7 +44,9 @@ mongoose.connect(process.env.DB_URL, {}).then(() => {
 
 // importing routers
 const productsRouter = require('./routers/productRouter')
+const userRouter = require('./routers/userRouter')
 app.use('/api/products', productsRouter)
+app.use('/api/users', userRouter)
 
 
 app.get('/', (req, res) => {

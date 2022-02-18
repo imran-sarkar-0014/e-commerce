@@ -1,11 +1,12 @@
 import './App.css';
-import React, { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom'
+import React, { Component, Suspense, useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 import AppLayout from './layout/AppLayout';
 import Header from './components/Header'
 import Sidebar from './components/SideBar'
 import Footer from './components/Footer';
+import { useSelector } from 'react-redux';
 
 const Home = React.lazy(() => import('./pages/Home'))
 const Profile = React.lazy(() => import('./pages/Profile'));
@@ -40,7 +41,35 @@ const NotFound = () => {
     )
 }
 
+
+const PrivateUrl = ({ component: Component }) => {
+    const user = useSelector(state => state.user)
+
+    return (
+        <>
+            {
+                user.logged ?
+                    <Component /> :
+                    <Navigate to='/auth/login' />
+            }
+        </>
+    )
+
+}
+
+
+
 function App() {
+
+
+    const userToken = useSelector(state => state.userToken)
+
+    useEffect(() => {
+
+        if (userToken === '')
+            return
+
+    }, [userToken])
 
     return (
 
@@ -55,13 +84,16 @@ function App() {
 
                     <Routes>
                         <Route path="/products/:id" element={<ProductView />} />
-                        <Route path="/wishes" element={<Wishes />} />
-                        <Route path="/carts" element={<Carts />} />
-                        <Route path="/orders" element={<Order />} />
+
+                        {/* private url */}
+                        <Route path="/wishes" element={<PrivateUrl component={Wishes} />} />
+                        <Route path="/carts" element={<PrivateUrl component={Carts} />} />
+                        <Route path="/orders" element={<PrivateUrl component={Order} />} />
+
                         <Route path="/auth/login" element={<Login />} />
                         <Route path="/auth/registration" element={< Registration />} />
-                        <Route path="/orders/:id" element={<Order />} />
-                        <Route path="/profile" element={<Profile />} />
+                        <Route path="/orders/:id" element={<PrivateUrl component={Order} />} />
+                        <Route path="/profile" element={<PrivateUrl component={Profile} />} />
                         <Route path="/" element={<Home />} />
                         <Route path='*' element={<NotFound />} />
                     </Routes>

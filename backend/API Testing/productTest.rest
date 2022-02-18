@@ -51,7 +51,7 @@ Content-Type: application/json
 }
 
 ### delete a product by it's id
-620e52c334b8708c88ec9095
+DELETE http://localhost:8000/api/products/620e54238c91bf56cae13212
 ###
 
 GET  http://localhost:8000/api/products/620e52c334b8708c88ec9095

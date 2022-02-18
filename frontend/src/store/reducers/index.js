@@ -8,11 +8,13 @@ import userReducer from './userReducer'
 import products from './products'
 import carts from './carts'
 import orders from './orders'
+import userToken from './userToken'
 
 import { combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
     user: userReducer,
+    userToken,
     products,
     carts,
     orders

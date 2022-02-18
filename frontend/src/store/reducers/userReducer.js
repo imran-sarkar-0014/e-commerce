@@ -1,7 +1,8 @@
 
-
-
-const inital = {}
+const inital = {
+    logged: false,
+    data: {}
+}
 
 const userReducer = (state = inital, action) => {
 

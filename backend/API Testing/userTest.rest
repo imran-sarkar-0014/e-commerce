@@ -1,0 +1,15 @@
+
+
+
+### 
+POST http://localhost:8000/api/users
+Content-Type: application/json
+
+{
+    "name" : "imran sarkar",
+    "email" : "imransarkar@gmail.com",
+    "password": "new_password"
+}
+
+
+

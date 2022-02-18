@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+
+import { login as loginUser } from '../../serviceWorkers/userAPI'
+import { setToken } from '../../store/actions/user'
 
 const Login = () => {
 
+    const dispatch = useDispatch()
     const [form, setForm] = useState({
         email: 'imran',
         password: ''
@@ -54,7 +59,13 @@ const Login = () => {
             return
         }
 
-        alert('logging')
+        loginUser(form, (token) => {
+
+            dispatch(setToken(token))
+
+        }, (err) => {
+            console.log(err)
+        })
     }
 
     const clear_error = (id) => {

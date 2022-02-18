@@ -8,15 +8,16 @@ const Wishes = () => {
         <section class="text-gray-600 body-font" >
             <div class="container mx-auto relative z-30">
                 <div class="flex flex-wrap m-4">
+                    helo wordl
 
+                    {/* <Product />
                     <Product />
                     <Product />
                     <Product />
                     <Product />
                     <Product />
                     <Product />
-                    <Product />
-                    <Product />
+                    <Product /> */}
 
                 </div>
             </div>
