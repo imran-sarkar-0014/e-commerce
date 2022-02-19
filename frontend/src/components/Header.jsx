@@ -19,7 +19,7 @@ const Header = ({ toggler }) => {
 
                 {/* input */}
                 <div className='hidden md:flex px-4 py-2 text-md bg-white text-black rounded-xl overflow-hidden items-center'>
-                    <input value={search} onChange={onInput} type="text" className='outline-none' />
+                    <input value={search} onChange={onInput} type="text" className='outline-none hover:outline-none flex-1 border-none focus:border-none m-0 p-0' />
                     <button>
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -60,7 +60,7 @@ const Header = ({ toggler }) => {
 
             {/* input */}
             <div className='md:hidden px-4 py-2 text-md bg-white text-black rounded overflow-hidden flex items-center mx-4 my-2'>
-                <input value={search} onChange={onInput} type="text" className='outline-none flex-1' />
+                <input value={search} onChange={onInput} type="text" className='outline-none hover:outline-none flex-1 border-none focus:border-none m-0 p-0' />
                 <button>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />

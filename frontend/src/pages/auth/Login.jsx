@@ -60,7 +60,7 @@ const Login = () => {
         }
 
         loginUser(form, (token) => {
-
+            localStorage.setItem('userToken', token)
             dispatch(setToken(token))
 
         }, (err) => {

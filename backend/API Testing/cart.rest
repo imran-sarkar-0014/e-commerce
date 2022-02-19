@@ -1,0 +1,27 @@
+### get carts
+GET  http://localhost:8000/api/carts
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGY5ZmM0ZWZjY2NkNjMwM2YzOWQ0ZCIsImlhdCI6MTY0NTI3NzM1NH0.5mnyR1rxwVn8Yio-kUlbmVMgbtaBoQokBgjPIgXNGIk
+
+### add a cart carts
+POST  http://localhost:8000/api/carts
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGY5ZmM0ZWZjY2NkNjMwM2YzOWQ0ZCIsImlhdCI6MTY0NTI3NzM1NH0.5mnyR1rxwVn8Yio-kUlbmVMgbtaBoQokBgjPIgXNGIk
+Content-Type: application/json
+
+{
+    "620e38e5585b104227dad40a" : 9
+}
+
+### add a cart carts
+PUT  http://localhost:8000/api/carts
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGY5ZmM0ZWZjY2NkNjMwM2YzOWQ0ZCIsImlhdCI6MTY0NTI3NzM1NH0.5mnyR1rxwVn8Yio-kUlbmVMgbtaBoQokBgjPIgXNGIk
+Content-Type: application/json
+
+{
+    "620e38e5585b104227dad40a" : 11
+}
+
+
+### add a cart carts
+DELETE   http://localhost:8000/api/carts/620e38e5585b104227dad40a
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGY5ZmM0ZWZjY2NkNjMwM2YzOWQ0ZCIsImlhdCI6MTY0NTI3NzM1NH0.5mnyR1rxwVn8Yio-kUlbmVMgbtaBoQokBgjPIgXNGIk
+Content-Type: application/json

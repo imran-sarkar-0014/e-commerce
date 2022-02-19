@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Component, Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 import AppLayout from './layout/AppLayout';
@@ -16,7 +16,7 @@ import { getUser } from './serviceWorkers/userAPI'
 
 /// store functionality
 
-import { resetUser, setUser } from './store/actions/user'
+import { resetUser, setUser, setToken } from './store/actions/user'
 
 
 const Home = React.lazy(() => import('./pages/Home'))
@@ -75,8 +75,17 @@ function App() {
     const user = useSelector(state => state.user)
     const userToken = useSelector(state => state.userToken)
 
+
     useEffect(() => {
 
+        const user_token = localStorage.getItem('userToken')
+
+        if (user_token)
+            dispatch(setToken(user_token))
+
+    }, [dispatch])
+
+    useEffect(() => {
 
         dispatch(resetUser())
         setHeader(userToken)
@@ -90,7 +99,7 @@ function App() {
             console.log(err)
         })
 
-    }, [userToken])
+    }, [userToken, dispatch])
 
     return (
 

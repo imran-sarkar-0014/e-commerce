@@ -27,8 +27,17 @@ const getProductById = async_handler(async (req, res) => {
 
 })
 
+const getCarts = (req, res) => {
+    console.log('hello world')
+}
 
-// add a new product
+const addCarts = (req, res) => {
+    console.log('hello world from add carts')
+}
+
+
+
+// add a new product inside database.
 const addProduct = async_handler(async (req, res) => {
 
     const new_product = await products.create(req.body)
@@ -53,4 +62,4 @@ const deleteProduct = async_handler(async (req, res) => {
 
 
 // export the function or controller to use by router.
-module.exports = { getProducts, getProductById, addProduct, updateProduct, deleteProduct }
+module.exports = { getProducts, getProductById, getCarts, addCarts, addProduct, updateProduct, deleteProduct }
