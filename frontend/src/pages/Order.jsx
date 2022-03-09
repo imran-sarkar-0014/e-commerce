@@ -1,20 +1,41 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-
+import { setOrders } from '../store/actions/order'
+import { getOrders } from '../serviceWorkers/order'
 
 const Order = () => {
 
-    const orders = temp
+    const orders = useSelector(state => state.orders)
+    const dispatch = useDispatch()
     const navigate = useNavigate()
+    const divRef = useRef()
+
 
     const clickHandler = (id) => {
         navigate(`/orders/${id}`)
     }
 
+    useEffect(() => {
+
+
+        if (divRef.current) {
+            divRef.current.scrollIntoView({
+                behavior: "smooth"
+            })
+        }
+
+        getOrders((data) => {
+            dispatch(setOrders(data))
+        }, (err) => {
+            console.error(err)
+        })
+    }, [dispatch])
+
     return (
 
-        <div class="flex flex-col">
+        <div ref={divRef} class="flex flex-col">
 
             <div className='mx-4 my-6'>
                 <h2 className='text-xl font-semibold'>Your Orders</h2>
@@ -27,7 +48,6 @@ const Order = () => {
                         <table class="min-w-full divide-y divide-gray-300">
                             <thead class="">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
                                     <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
@@ -43,14 +63,13 @@ const Order = () => {
 
                                 {
                                     orders.map(order => (
-                                        <tr key={order.key} className="cursor-pointer" onClick={() => clickHandler(order.id)}>
-                                            <td class="px-6 py-4 whitespace-nowrap">{order.id}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">{order.name}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap">${order.price / 100}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{order.quantity}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">${(order.price * order.quantity) / 100}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">{order.payment}</td>
-                                            <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">{order.status}</td>
+                                        <tr key={order.key} className="cursor-pointer" onClick={() => clickHandler(order._id)}>
+                                            <td className="px-6 py-4 whitespace-nowrap max-w-sm overflow-auto">{order.name}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap">${order.price / 100}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{order.quantity}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">${(order.price * order.quantity) / 100}</td>
+                                            <td className={`px-6 py-4 whitespace-nowrap text-sm font-medium ${order.payment ? 'text-green-500' : 'text-red-500'}`}>{order.payment ? 'Payed' : 'not Payed'}</td>
+                                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">{order.status}</td>
                                         </tr>
                                     ))
                                 }
@@ -68,355 +87,3 @@ const Order = () => {
 };
 
 export default Order;
-
-
-
-const temp = [
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-    {
-        id: "u934343",
-        name: "mobile phone and other",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-    {
-        id: "u934343",
-        name: "watch",
-        price: 1283,
-        quantity: 3,
-        status: "on pleace",
-        delivary: Date.now(),
-        payment: "paid"
-    },
-
-
-]

@@ -2,20 +2,26 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+import { useNavigate } from 'react-router-dom'
 import { login as loginUser } from '../../serviceWorkers/userAPI'
 import { setToken } from '../../store/actions/user'
+
+import { setToast } from '../../store/actions/toast'
 
 const Login = () => {
 
     const dispatch = useDispatch()
+
+    const navigate = useNavigate()
+
     const [form, setForm] = useState({
         email: 'imran',
         password: ''
     })
 
     const [valid, setValid] = useState({
-        email: 'fdd',
-        password: 'fdfd'
+        email: '',
+        password: ''
     })
 
 
@@ -62,11 +68,20 @@ const Login = () => {
         loginUser(form, (token) => {
             localStorage.setItem('userToken', token)
             dispatch(setToken(token))
+            navigate('/', { replace: true })
 
         }, (err) => {
-            console.log(err)
+            console.error(err)
+            dispatch(setToast({
+                show: true,
+                msg: 'Login Fail',
+                success: false
+            }))
         })
     }
+
+
+
 
     const clear_error = (id) => {
         setValid({

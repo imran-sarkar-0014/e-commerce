@@ -25,3 +25,13 @@ Content-Type: application/json
 DELETE   http://localhost:8000/api/carts/620e38e5585b104227dad40a
 Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGY5ZmM0ZWZjY2NkNjMwM2YzOWQ0ZCIsImlhdCI6MTY0NTI3NzM1NH0.5mnyR1rxwVn8Yio-kUlbmVMgbtaBoQokBgjPIgXNGIk
 Content-Type: application/json
+
+
+### add a cart carts
+put   http://localhost:8000/api/carts/
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGY5ZmM0ZWZjY2NkNjMwM2YzOWQ0ZCIsImlhdCI6MTY0NTI3NzM1NH0.5mnyR1rxwVn8Yio-kUlbmVMgbtaBoQokBgjPIgXNGIk
+Content-Type: application/json
+
+{
+    "list" : ["620e35ea891dbfb97f4d4cd8", "620e3493fdb315d4f9e01da9"]
+}

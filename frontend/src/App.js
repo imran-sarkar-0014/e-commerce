@@ -17,14 +17,19 @@ import { getUser } from './serviceWorkers/userAPI'
 /// store functionality
 
 import { resetUser, setUser, setToken } from './store/actions/user'
+import Toast from './components/Toast';
 
 
 const Home = React.lazy(() => import('./pages/Home'))
 const Profile = React.lazy(() => import('./pages/Profile'));
 const ProductView = React.lazy(() => import('./pages/ProductView'));
 const Order = React.lazy(() => import('./pages/Order'));
+const OrderView = React.lazy(() => import('./pages/OrderView'));
 const Carts = React.lazy(() => import('./pages/Carts'));
 const Wishes = React.lazy(() => import('./pages/Wishes'));
+const Checkout = React.lazy(() => import('./pages/Checkout'));
+const Success = React.lazy(() => import('./pages/payment/Success'))
+const Cancel = React.lazy(() => import('./pages/payment/Cancel'))
 
 const Login = React.lazy(() => import('./pages/auth/Login'))
 const Registration = React.lazy(() => import('./pages/auth/Registration'))
@@ -52,14 +57,15 @@ const NotFound = () => {
 }
 
 
-const PrivateUrl = ({ component: Component }) => {
+const PrivateUrl = ({ component: Component, ...props }) => {
     const user = useSelector(state => state.user)
 
     return (
         <>
             {
                 user.logged ?
-                    <Component /> :
+                    <Component props />
+                    :
                     <Navigate to='/auth/login' />
             }
         </>
@@ -88,15 +94,19 @@ function App() {
     useEffect(() => {
 
         dispatch(resetUser())
+
+        console.log('token is :' + userToken)
+
         setHeader(userToken)
 
         if (userToken === '')
             return
 
         getUser((_user) => {
+
             dispatch(setUser(_user))
         }, (err) => {
-            console.log(err)
+            console.error(err)
         })
 
     }, [userToken, dispatch])
@@ -110,6 +120,9 @@ function App() {
         >
             <div className='overflow-y-scroll w-full h-full '>
 
+                <Toast msg='Success' />
+
+
                 <Suspense fallback={spin}>
 
                     <Routes>
@@ -119,6 +132,10 @@ function App() {
                         <Route path="/wishes" element={<PrivateUrl component={Wishes} />} />
                         <Route path="/carts" element={<PrivateUrl component={Carts} />} />
                         <Route path="/orders" element={<PrivateUrl component={Order} />} />
+                        <Route path="/orders/:id" element={<PrivateUrl component={OrderView} />} />
+                        <Route path="/payment/success" element={<PrivateUrl component={Success} />} />
+                        <Route path="/payment/cancel" element={<PrivateUrl component={Cancel} />} />
+                        <Route path="/checkout" element={<PrivateUrl component={Checkout} />} />
 
 
                         <Route path="/auth/login" element={

@@ -8,7 +8,6 @@ router.use(userMiddleware)
 
 router.get('/', getCarts)
 router.post('/', addCarts)
-router.put('/', addCarts)
-router.delete('/:id', deleteCarts)
+router.put('/', deleteCarts)
 
 module.exports = router

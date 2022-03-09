@@ -1,3 +1,11 @@
 /* ::-webkit-scrollbar {
   width: 10px;
 } */
+
+tr > *::-webkit-scrollbar{
+  width: 10px;
+}
+
+.ppp::-webkit-scrollbar{
+  width: 0;
+}

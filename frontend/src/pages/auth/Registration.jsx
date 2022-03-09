@@ -1,17 +1,28 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-
+import { useDispatch } from 'react-redux'
+import { registerUser } from '../../serviceWorkers/userAPI'
+import { useNavigate } from 'react-router-dom'
+import { setToken } from '../../store/actions/user'
+import { setToast } from '../../store/actions/toast'
 
 const Registration = () => {
 
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+
     const [form, setForm] = useState({
+        name: '',
         email: 'imran',
         password: ''
     })
 
     const [valid, setValid] = useState({
-        email: 'fdd',
-        password: 'fdfd'
+        name: '',
+        email: '',
+        password: ''
     })
 
 
@@ -28,6 +39,7 @@ const Registration = () => {
         let error = false
 
         const validing = {
+            name: '',
             email: '',
             password: ''
         }
@@ -55,7 +67,22 @@ const Registration = () => {
             return
         }
 
-        alert('logging')
+        registerUser(form, (token) => {
+
+            localStorage.setItem('userToken', token)
+            dispatch(setToken(token))
+            navigate('/', { replace: true })
+
+        }, (err) => {
+
+            console.error(err)
+            dispatch(setToast({
+                show: true,
+                msg: 'Registration fail',
+                success: false
+            }))
+        })
+
     }
 
     const clear_error = (id) => {
@@ -78,13 +105,35 @@ const Registration = () => {
                 <h3 className="text-2xl pt-10 font-bold text-pink-500">Create an Account</h3>
             </div>
             <form onSubmit={handleSubmit} class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+
+
+
+
+                {/* Email */}
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                         Username
                     </label>
+                    <input onChange={handleChange} value={form.name} class={`shadow appearance-none border ${valid.name === '' ? 'border-blue-500' : 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="name" type="text" placeholder="Username" />
+                    <p class="text-red-500 text-xs italic">{valid.name}</p>
+                </div>
+
+
+
+                {/* Email */}
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                        Email
+                    </label>
                     <input onChange={handleChange} value={form.email} class={`shadow appearance-none border ${valid.email === '' ? 'border-blue-500' : 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`} id="email" type="text" placeholder="Username" />
                     <p class="text-red-500 text-xs italic">{valid.email}</p>
                 </div>
+
+
+
+
+                {/* Password */}
                 <div class="mb-6">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
                         Password
@@ -92,6 +141,8 @@ const Registration = () => {
                     <input onChange={handleChange} value={form.password} class={`shadow appearance-none border ${valid.password == '' ? 'border-blue-500' : 'border-red-500'} rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline`} id="password" type="password" placeholder="Enter your Password" />
                     <p class="text-red-500 text-xs italic">{valid.password}</p>
                 </div>
+
+
                 <div class="flex items-center justify-between">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type='submit'>
                         Resistration

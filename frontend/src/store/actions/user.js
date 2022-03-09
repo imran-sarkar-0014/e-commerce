@@ -1,6 +1,6 @@
 import {
     SET_TOKEN,
-    SET_USER, ADD_TO_CART, REMOVE_FROM_CART, ADD_TO_ORDER, RESET_USER,
+    SET_USER, SET_CARTS, SET_ORDERS, RESET_USER
 } from '../constants/user'
 
 
@@ -27,23 +27,16 @@ export const setUser = (user) => {
     }
 }
 
-export const addToCart = (item) => {
+export const setCarts = (carts) => {
     return {
-        type: ADD_TO_CART,
-        payload: item
+        type: SET_CARTS,
+        payload: carts
     }
 }
 
-export const removeFromCart = (id) => {
+export const setOrders = (orders) => {
     return {
-        type: REMOVE_FROM_CART,
-        payload: id
-    }
-}
-
-export const addToOrder = (item) => {
-    return {
-        type: ADD_TO_ORDER,
-        payload: item
+        type: SET_ORDERS,
+        payload: orders
     }
 }

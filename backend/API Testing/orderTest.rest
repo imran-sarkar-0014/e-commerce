@@ -1,0 +1,21 @@
+### get user
+POST  http://localhost:8000/api/order/create
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGY5ZmM0ZWZjY2NkNjMwM2YzOWQ0ZCIsImlhdCI6MTY0NTI4MjQ1MX0.ua7XZPhcDts_aCjGqlpE4zU2aC1ovCp3F78q6kQJKkE
+Content-Type: application/json
+
+[
+        {
+            "quantity" : 6
+        }
+]
+
+
+###
+
+POST  http://localhost:8000/api/order/accept
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMGY5ZmM0ZWZjY2NkNjMwM2YzOWQ0ZCIsImlhdCI6MTY0NTI4MjQ1MX0.ua7XZPhcDts_aCjGqlpE4zU2aC1ovCp3F78q6kQJKkE
+Content-Type: application/json
+
+{
+    "token" : "hellooreor"
+}

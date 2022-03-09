@@ -27,6 +27,8 @@ const loginUser = async_handler(async (req, res) => {
     res.json(token)
 })
 
+
+
 // create a new user
 const addUser = async_handler(async (req, res) => {
 
@@ -35,8 +37,9 @@ const addUser = async_handler(async (req, res) => {
 
     const newUser = await users.create(req.body)
 
+
     const token = jwt.sign({
-        _id: newUser._id
+        id: newUser._id
     }, process.env.JWT_SECRET)
 
     res.json(token)

@@ -1,5 +1,5 @@
 import {
-    SET_USER, ADD_TO_CART, REMOVE_FROM_CART, ADD_TO_ORDER, RESET_USER,
+    SET_USER, SET_CARTS, SET_ORDERS, RESET_USER,
 } from '../constants/user'
 
 
@@ -17,6 +17,13 @@ const userReducer = (state = inital, action) => {
 
         case SET_USER:
             return action.payload
+
+        case SET_CARTS:
+            state.data.carts = action.payload
+            return state
+        case SET_ORDERS:
+            state.data.orders = action.payload
+            return state
 
         default: return state
     }

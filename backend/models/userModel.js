@@ -20,8 +20,8 @@ const userSchema = new mongoose.Schema({
         default: ''
     },
     carts: {
-        type: Object,
-        default: {}
+        type: Array,
+        default: []
     },
     orders: {
         type: Array,

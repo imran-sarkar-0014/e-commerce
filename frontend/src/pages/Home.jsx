@@ -22,7 +22,7 @@ const Home = () => {
         getProducts((_products) => {
             dispatch(setProduct(_products))
         }, (err) => {
-            console.log(err)
+            console.error(err)
         })
     }, [])
 

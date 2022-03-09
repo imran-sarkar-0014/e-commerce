@@ -9,6 +9,17 @@ export const login = async (credentials, callback, fallback) => {
     }
 }
 
+export const registerUser = async (credentials, callback, fallback) => {
+    try {
+        console.log(credentials)
+        const response = await axios.post('/api/users', credentials)
+        callback(response.data)
+
+    } catch (err) {
+        fallback(err)
+    }
+}
+
 export const getUser = async (callback, fallback) => {
     try {
         const user = await axios.get('/api/users')

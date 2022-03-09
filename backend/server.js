@@ -46,9 +46,14 @@ mongoose.connect(process.env.DB_URL, {}).then(() => {
 const productsRouter = require('./routers/productRouter')
 const userRouter = require('./routers/userRouter')
 const cartRouter = require('./routers/cartRouter')
+const orderRouter = require('./routers/orderRouter')
+const favorite = require('./routers/favoriteRoute')
+
 app.use('/api/products', productsRouter)
 app.use('/api/users', userRouter)
 app.use('/api/carts', cartRouter)
+app.use('/api/order', orderRouter)
+app.use('/api/favorite', favorite)
 
 
 app.get('/', (req, res) => {

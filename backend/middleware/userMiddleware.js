@@ -17,6 +17,7 @@ const userMiddleware = async_handler(async (req, res, next) => {
         throw new Error('forbidden')
     }
 
+
     const result = jwt.verify(token, process.env.JWT_SECRET)
     const _user = await users.findOne({ _id: result.id }).select('-password')
 

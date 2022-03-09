@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 
-import { getCarts } from '../serviceWorkers/carts'
+import { getCarts, deleteCarts } from '../serviceWorkers/carts'
+import { createOrder } from '../serviceWorkers/order'
 import { setCart } from '../store/actions/cart'
+
+import { setCarts as userCarts } from '../store/actions/user'
+
+import CartItem from '../components/CartItem'
+import { useNavigate } from 'react-router-dom';
 
 const Carts = () => {
 
@@ -10,43 +16,84 @@ const Carts = () => {
 
     const dispatch = useDispatch()
     const carts = useSelector(state => state.carts)
-    const user = useSelector(state => state.user.data)
+    const navigate = useNavigate()
+    const divRef = useRef()
 
-    useEffect(() => {
-
+    const gettingData = useCallback(() => {
         getCarts((data) => {
             const _carts = data.map((cart) => {
-                const quantities = user.carts[cart._id]
-                return { ...cart, quantities: quantities, checked: false }
+                return { ...cart, quantities: 1, checked: false }
             })
 
             dispatch(setCart(_carts))
         }, (err) => {
-            console.log(err)
+            console.error(err)
         })
+    }, [dispatch])
 
+    useEffect(() => {
 
-    }, [user.carts, dispatch])
+        if (divRef.current) {
+            divRef.current.scrollIntoView({
+                behavior: "smooth"
+            })
+        }
+
+        gettingData()
+    }, [dispatch, gettingData])
 
     useEffect(() => {
 
         let tracker = 0
 
-
         carts.forEach(cart => {
-
             if (!cart.checked)
                 return
 
             let subtotal = Number(cart.priceInCent * cart.quantities)
             tracker += subtotal
-            console.log(subtotal)
-            console.log(tracker)
         });
 
         setTotal(tracker)
 
     }, [carts])
+
+
+    const deleteHandler = () => {
+
+        const selectedId = carts.filter(c => c.checked === true).map(c => c._id)
+        // seleted cart will be deleted
+
+        deleteCarts({
+            list: selectedId
+        }, (data) => {
+            dispatch(userCarts(data))
+            gettingData()
+        }, (err) => {
+            console.error(err)
+        })
+    }
+
+    const checkoutHandler = () => {
+        const selectedId = carts.filter(c => c.checked === true).map(c => ({
+            _id: c._id,
+            quantities: c.quantities
+        }))
+
+        createOrder({ orders: selectedId }, (data) => {
+
+            navigate('/checkout', {
+                state: {
+                    items: data.items
+                }
+            })
+
+        }, (err) => {
+            console.error(err)
+        })
+
+
+    }
 
     const updateCart = (id, update) => {
         dispatch(setCart(
@@ -60,8 +107,10 @@ const Carts = () => {
         ))
     }
 
+
+    /// display carts
     return (
-        <div className='block'>
+        <div ref={divRef} className='block'>
 
             {
                 carts?.map(prod => (
@@ -76,69 +125,23 @@ const Carts = () => {
                 </div>
 
                 <div className='border rounded-lg overflow-hidden w-max text-white transition-all duration-800'>
-                    <button className='bg-green-500 px-3 py-2 hover:scale-105'>Checkout</button>
-                    <button className='bg-red-500 px-3 py-2 hover:scale-105'>Delete</button>
+
+                    <button onClick={checkoutHandler} className='bg-green-500 px-3 py-2 hover:scale-105'>Checkout</button>
+
+                    <button onClick={deleteHandler} className='bg-red-500 px-3 py-2 hover:scale-105'>Delete</button>
                 </div>
 
             </div>
 
-
-        </div>
+        </div >
     );
 };
 
 
-const CartItem = ({ item, updateCart }) => {
-
-    const subHandler = () => {
-        updateCart(item._id, {
-            quantities: item.quantities > 1 ? item.quantities - 1 : item.quantities
-        })
-    }
-
-    const addHandler = () => {
-        updateCart(item._id, {
-            quantities: item.quantities + 1
-        })
-    }
-
-    const handleChecked = () => {
-        updateCart(item._id, {
-            checked: !item.checked
-        })
-    }
-
-    return (
-        <div className='border mx-2 flex my-3 relative py-4'>
 
 
-            <label class="inline-flex absolute top-1 right-1 items-center">
-                <input onChange={handleChecked} checked={item.checked} type="checkbox" class="form-checkbox h-5 w-5 outline-none focus:outline-none text-pink-600" />
-            </label>
 
-            <div className='h-32 w-32 aspcet-w-16 aspcet-h-9'>
-                <img className='h-full w-full p-2 object-cover object-center' src={item.imageURL} alt="product" />
-            </div>
+// checkout
 
-            <div className='p-3 flex-1 pt-4'>
-                <h2 className='font-semibold text-sm'>{item.productName}</h2>
-                <h5 className='my-2'>Price ${Number(item.priceInCent / 100).toFixed(2)}</h5>
-                <h5 className='my-2'>Sub total ${Number(item.priceInCent / 100 * item.quantities).toFixed(2)}</h5>
-
-                <div className='flex'>
-
-                    <h4>Quantity</h4>
-                    <div className='flex border mx-2 rounded-md overflow-hidden text-white text-md font-bold'>
-                        <button onClick={subHandler} className='px-2 bg-red-500'>-</button>
-                        <h4 className='border px-2 text-black'>{item.quantities}</h4>
-                        <button onClick={addHandler} className='px-2 bg-green-500'>+</button>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    )
-}
 
 export default Carts;

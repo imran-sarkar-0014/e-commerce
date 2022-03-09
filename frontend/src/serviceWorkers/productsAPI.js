@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from './axios'
 
 export const getProducts = async (callback, fallback) => {
     try {
@@ -7,7 +7,6 @@ export const getProducts = async (callback, fallback) => {
         callback(products.data)
 
     } catch (err) {
-        console.log(err)
         fallback(err)
     }
 }
@@ -16,6 +15,26 @@ export const getOneProductDetails = async (id, callback, fallback) => {
     try {
         const product = await axios.get('/api/products/' + id)
         callback(product.data)
+    } catch (err) {
+        fallback(err)
+    }
+}
+
+export const getFavs = async (callback, fallback) => {
+    try {
+        const response = await axios.get('/api/favorite')
+        callback(response.data)
+    } catch (err) {
+        fallback(err)
+    }
+}
+
+export const addToFav = async (id, callback, fallback) => {
+    try {
+
+        const response = await axios.post(`/api/favorite/${id}`)
+        callback(response.data)
+
     } catch (err) {
         fallback(err)
     }
